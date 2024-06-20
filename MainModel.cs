@@ -30,14 +30,15 @@ namespace BubbleSort
         /// <param name="amount">Количество пользователей</param>
         public async Task GenerateRecords(int amount)
         {
+            _Users.Clear();
             Random random = new Random();
 
             await Task.Run(() =>
             {
                 for (int i = 0; i < amount; i++)
                 {
-                    string login = GenerateRandomString(random, 5, 8);
-                    string nickname = GenerateRandomString(random, 5, 8);
+                    string login = GenerateRandomString(random, 5, 10);
+                    string nickname = GenerateRandomString(random, 5, 10);
                     byte age = (byte)random.Next(18, 100);
 
                     User user = new User
