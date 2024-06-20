@@ -9,6 +9,7 @@ namespace BubbleSort
     interface IMainModel
     {
         IReadOnlyCollection<User> Users { get; }
+        void GenerateRecords(int amount);
         void SortByLogin();
         void SortByNickname();
         void SortByAge();
