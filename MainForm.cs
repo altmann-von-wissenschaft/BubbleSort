@@ -10,12 +10,17 @@ using System.Windows.Forms;
 
 namespace BubbleSort
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IMainView
     {
         public MainForm()
         {
             InitializeComponent();
         }
 
+        public event EventHandler Exit
+        {
+            add => this.FormClosed += new FormClosedEventHandler(value);
+            remove => this.FormClosed += new FormClosedEventHandler(value);
+        }
     }
 }
