@@ -28,49 +28,52 @@ namespace BubbleSort
         /// Метод генерации пользователей
         /// </summary>
         /// <param name="amount">Количество пользователей</param>
-        public void GenerateRecords(int amount)
+        public async Task GenerateRecords(int amount)
         {
             Random random = new Random();
 
-            for (int i = 0; i < amount; i++)
+            await Task.Run(() =>
             {
-                string login = GenerateRandomString(random, 5, 10);
-                string nickname = GenerateRandomString(random, 5, 10);
-                byte age = (byte)random.Next(18, 100);
-
-                User user = new User
+                for (int i = 0; i < amount; i++)
                 {
-                    login = login,
-                    nickname = nickname,
-                    age = age
-                };
+                    string login = GenerateRandomString(random, 5, 8);
+                    string nickname = GenerateRandomString(random, 5, 8);
+                    byte age = (byte)random.Next(18, 100);
 
-                _Users.Add(user);
-            }
+                    User user = new User
+                    {
+                        login = login,
+                        nickname = nickname,
+                        age = age
+                    };
+
+                    _Users.Add(user);
+                }
+            });
         }
 
         /// <summary>
         /// Метод сортировки коллекции по полю логина
         /// </summary>
-        public void SortByLogin()
+        public async Task SortByLogin()
         {
-            BubbleSort((userPrev, userNext) => string.Compare(userPrev.login, userNext.login));
+            await BubbleSort((user1, user2) => string.Compare(user1.login, user2.login));
         }
 
         /// <summary>
         /// Метод сортировки коллекции по полю ника
         /// </summary>
-        public void SortByNickname()
+        public async Task SortByNickname()
         {
-            BubbleSort((userPrev, userNext) => string.Compare(userPrev.nickname, userNext.nickname));
+            await BubbleSort((user1, user2) => string.Compare(user1.nickname, user2.nickname));
         }
 
         /// <summary>
         /// Метод сортировки коллекции по полю возраста
         /// </summary>
-        public void SortByAge()
+        public async Task SortByAge()
         {
-            BubbleSort((userPrev, userNext) => userPrev.age.CompareTo(userNext.age));
+            await BubbleSort((user1, user2) => user1.age.CompareTo(user2.age));
         }
 
         /// <summary>
@@ -112,20 +115,28 @@ namespace BubbleSort
             }
         }
 
-        private void BubbleSort(Comparison<User> comparison)
+        private async Task BubbleSort(Comparison<User> comparison)
         {
-            for (int i = 0; i < _Users.Count - 1; i++)
+            await Task.Run(() =>
             {
-                for (int j = 0; j < _Users.Count - i - 1; j++)
+                bool swapped;
+                for (int i = 0; i < _Users.Count - 1; i++)
                 {
-                    if (comparison(_Users[j], _Users[j + 1]) > 0)
+                    swapped = false;
+                    for (int j = 0; j < _Users.Count - i - 1; j++)
                     {
-                        User temp = _Users[j];
-                        _Users[j] = _Users[j + 1];
-                        _Users[j + 1] = temp;
+                        if (comparison(_Users[j], _Users[j + 1]) > 0)
+                        {
+                            User temp = _Users[j];
+                            _Users[j] = _Users[j + 1];
+                            _Users[j + 1] = temp;
+                            swapped = true;
+                        }
                     }
+                    if (!swapped)
+                        break;
                 }
-            }
+            });
         }
 
         private string GenerateRandomString(Random random, int minLength, int maxLength)
