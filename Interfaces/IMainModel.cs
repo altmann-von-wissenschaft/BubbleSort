@@ -9,9 +9,10 @@ namespace BubbleSort
     interface IMainModel
     {
         IReadOnlyCollection<User> Users { get; }
-        void SortByLogin();
-        void SortByNickname();
-        void SortByAge();
+        Task Generate(int amount);
+        Task SortByLogin();
+        Task SortByNickname();
+        Task SortByAge();
         void SaveAsFile(string fileName);
         void LoadAsFile(string fileName);
     }

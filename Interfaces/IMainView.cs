@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BubbleSort
 {
     interface IMainView : IView
     {
+        event EventHandler OnGenerate;
+        event EventHandler OnSave;
+        event EventHandler OnLoad;
+        event EventHandler OnSortByLogin;
+        event EventHandler OnSortByNickname;
+        event EventHandler OnSortByAge;
+        int Amount { get; }
+        string GetLoadFileName();
+        string GetSaveFileName();
+        void UpdateData(IReadOnlyCollection<User> users);
+        void Awaiting();
+        void Ready();
     }
 }
