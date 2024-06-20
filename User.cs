@@ -8,8 +8,8 @@ namespace BubbleSort
 {
     struct User
     {
-        string login;
-        string nickname;
-        byte age;
+        public string login;
+        public string nickname;
+        public byte age;
     }
 }
