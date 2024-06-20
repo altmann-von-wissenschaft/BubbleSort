@@ -19,8 +19,8 @@ namespace BubbleSort
         /// <summary>
         /// Метод возврата коллекции для чтения
         /// </summary>
-        public IReadOnlyCollection<User> Users 
-        { 
+        public IReadOnlyCollection<User> Users
+        {
             get { return _Users.AsReadOnly(); }
         }
 

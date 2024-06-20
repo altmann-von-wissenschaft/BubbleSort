@@ -8,6 +8,7 @@ namespace BubbleSort
 {
     static class Program
     {
+        static MainPresenter presenter;
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -17,7 +18,8 @@ namespace BubbleSort
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+            presenter = new MainPresenter(new MainForm(), new MainModel());
+            presenter.Run();
         }
     }
 }
