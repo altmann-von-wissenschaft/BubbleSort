@@ -11,7 +11,7 @@ namespace BubbleSort
         event EventHandler OnSortByLogin;
         event EventHandler OnSortByNickname;
         event EventHandler OnSortByAge;
-        int Amount { get; }
+        int AmountToGenerate { get; }
         string GetLoadFileName();
         string GetSaveFileName();
         void UpdateData(IReadOnlyCollection<User> users);

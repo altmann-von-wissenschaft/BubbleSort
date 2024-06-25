@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace BubbleSort
 {
@@ -25,15 +20,12 @@ namespace BubbleSort
             view.OnSave += new EventHandler(OnSave);
         }
 
-        public void Run() 
-        { 
-            Application.Run((Form)view);
-        } 
+        public void Run() => view.Show();
 
         async void OnGenerate(object s, EventArgs e)
         {
             view.Awaiting();
-            await model.GenerateRecords(view.Amount);
+            await model.GenerateRecords(view.AmountToGenerate);
             view.UpdateData(model.Users);
             view.Ready();
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace BubbleSort
 {
     interface IView

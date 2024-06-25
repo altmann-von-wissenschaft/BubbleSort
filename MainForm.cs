@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BubbleSort
 {
     partial class MainForm : Form, IMainView
     {
-
         public MainForm()
         {
             InitializeComponent();
@@ -23,6 +16,10 @@ namespace BubbleSort
             foreach (DataGridViewColumn column in table.Columns)
                 column.SortMode = DataGridViewColumnSortMode.NotSortable;
         }
+
+        ~MainForm() => Application.Exit();
+
+        public new void Show() => Application.Run(this);
 
         public void UpdateData(IReadOnlyCollection<User> users)
         {
@@ -67,20 +64,20 @@ namespace BubbleSort
             return null;
         }
 
-        public int Amount { get => (int)numeric.Value; }
+        public int AmountToGenerate { get => (int)numeric.Value; }
 
         public void Awaiting()
         {
             foreach (Control control in Controls)
                 control.Enabled = false;
-            labelStatus.Text = "Выполняется...";
+            labelStatus.Text = "Статус: выполняется...";
         }
 
         public void Ready()
         {
             foreach (Control control in Controls)
                 control.Enabled = true;
-            labelStatus.Text = "Завершено";
+            labelStatus.Text = "Статус: завершено";
         }
 
         public event EventHandler OnGenerate
