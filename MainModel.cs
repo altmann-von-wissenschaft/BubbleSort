@@ -54,7 +54,7 @@ namespace BubbleSort
         /// </summary>
         public async Task SortByLogin()
         {
-            await BubbleSort((user1, user2) => string.Compare(user1.login, user2.login));
+            await Task.Run(() => BubbleSort((user1, user2) => string.Compare(user1.login, user2.login)));
         }
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace BubbleSort
         /// </summary>
         public async Task SortByNickname()
         {
-            await BubbleSort((user1, user2) => string.Compare(user1.nickname, user2.nickname));
+            await Task.Run(() => BubbleSort((user1, user2) => string.Compare(user1.nickname, user2.nickname)));
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace BubbleSort
         /// </summary>
         public async Task SortByAge()
         {
-            await BubbleSort((user1, user2) => user1.age.CompareTo(user2.age));
+            await Task.Run(() => BubbleSort((user1, user2) => user1.age.CompareTo(user2.age)));
         }
 
         /// <summary>
@@ -112,28 +112,25 @@ namespace BubbleSort
             }
         }
 
-        private async Task BubbleSort(Comparison<User> comparison)
+        private void BubbleSort(Comparison<User> comparison)
         {
-            await Task.Run(() =>
+            bool swapped;
+            for (int i = 0; i < _Users.Count - 1; i++)
             {
-                bool swapped;
-                for (int i = 0; i < _Users.Count - 1; i++)
+                swapped = false;
+                for (int j = 0; j < _Users.Count - i - 1; j++)
                 {
-                    swapped = false;
-                    for (int j = 0; j < _Users.Count - i - 1; j++)
+                    if (comparison(_Users[j], _Users[j + 1]) > 0)
                     {
-                        if (comparison(_Users[j], _Users[j + 1]) > 0)
-                        {
-                            User temp = _Users[j];
-                            _Users[j] = _Users[j + 1];
-                            _Users[j + 1] = temp;
-                            swapped = true;
-                        }
+                       User temp = _Users[j];
+                       _Users[j] = _Users[j + 1];
+                        _Users[j + 1] = temp;
+                        swapped = true;
                     }
-                    if (!swapped)
-                        break;
                 }
-            });
+                if (!swapped)
+                    break;
+            }
         }
 
         private string GenerateRandomString(Random random, int minLength, int maxLength)
